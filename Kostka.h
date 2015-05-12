@@ -3,7 +3,8 @@
 
 #include "stdio.h"
 #include "Rubik.h"
-
+#include <cstdlib>
+using namespace std;
 class Kostka{
 	private:
 		Scianka *Up,*Left,*Front,*Right,*Back,*Down;
@@ -84,12 +85,12 @@ void Kostka::f() {
 
 void Kostka::R() {
 	Right->ObrotC();
-	Obrot(*Up, 2,4,7, *Back, 0, 1,2, *Down, 2, 4, 7, *Front,2,4,7);	
+	Obrot(*Up, 2,4,7, *Back, 0, 3,5, *Down, 2, 4, 7, *Front,2,4,7);	
 }
 
 void Kostka::r() {
 	Right->ObrotAC();
-	Obrot(*Front, 2,4,7, *Down, 2,4,7, *Back, 0,1,2, *Up, 2,4,7);	
+	Obrot(*Front, 2,4,7, *Down, 2,4,7, *Back, 0,3,5, *Up, 2,4,7);	
 }
 
 void Kostka::B() {
@@ -126,6 +127,76 @@ void Kostka::Wypisz() {
 	printf("\n");
 	Down->Wypisz('\t');
 	printf("\n\n");
+}
+
+void Kostka::Ruch(char x) {
+	switch(x) {
+		case 'U' : {
+				   U();
+				   Wypisz();
+				   CzyUlozona();
+			   } break;
+		case 'u' : {
+				   u();
+				   Wypisz();
+				   CzyUlozona();
+			   } break;
+		case 'L' : {
+				   L();
+				   Wypisz();
+				   CzyUlozona();
+			   } break;
+		case 'l' : {
+				   l();
+				   Wypisz();
+				   CzyUlozona();
+			   } break;
+		case 'F' : {
+				   F();
+				   Wypisz();
+				   CzyUlozona();
+			   } break;
+		case 'f' : {
+				   f();
+				   Wypisz();
+				   CzyUlozona();
+			   } break;
+		case 'R' : {
+				   R();
+				   Wypisz();
+				   CzyUlozona();
+			   } break;
+		case 'r' : {
+				   r();
+				   Wypisz();
+				   CzyUlozona();
+			   } break;
+		case 'B' : {
+				   B();
+				   Wypisz();
+				   CzyUlozona();
+			   } break;
+		case 'b': {
+				  b();
+				  Wypisz();
+				  CzyUlozona();
+			  } break;
+		case 'D': {
+				  D();
+				  Wypisz();
+				  CzyUlozona();
+			  } break;
+		case 'd': {
+				  d();
+				  Wypisz();
+				  CzyUlozona();
+			  } break;
+		case 'q': {
+			  } 
+			  default : {
+				exit(0);				  
+			  }
+	}
 }
 
 #endif

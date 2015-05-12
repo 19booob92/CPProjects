@@ -7,56 +7,56 @@ int main() {
 	kostka->CzyUlozona();
 	while (1) {
 		char sign = getchar();
-		if (sign == 'w') {
+		if (sign == 'U') {
 			kostka->U();
 			kostka->Wypisz();
 			kostka->CzyUlozona();
-		} else if (sign == 's'){
+		} else if (sign == 'u'){
 			kostka->u();
 			kostka->Wypisz();
 			kostka->CzyUlozona();
-		} else if (sign == 'q'){
+		} else if (sign == 'L'){
 			kostka->L();
 			kostka->Wypisz();
 			kostka->CzyUlozona();
-		} else if (sign == 'a'){
+		} else if (sign == 'l'){
 			kostka->l();
 			kostka->Wypisz();
 			kostka->CzyUlozona();
-		} else if (sign == 'e'){
+		} else if (sign == 'F'){
 			kostka->F();
 			kostka->Wypisz();
 			kostka->CzyUlozona();
-		} else if (sign == 'd'){
+		} else if (sign == 'f'){
 			kostka->f();
 			kostka->Wypisz();
 			kostka->CzyUlozona();
-		} else if (sign == 'r'){
+		} else if (sign == 'R'){
 			kostka->R();
 			kostka->Wypisz();
 			kostka->CzyUlozona();
-		} else if (sign == 'f'){
+		} else if (sign == 'r'){
 			kostka->r();
 			kostka->Wypisz();
 			kostka->CzyUlozona();
-		} else if (sign == 't'){
+		} else if (sign == 'B'){
 			kostka->B();
 			kostka->Wypisz();
 			kostka->CzyUlozona();
-		} else if (sign == 'g'){
+		} else if (sign == 'b'){
 			kostka->b();
 			kostka->Wypisz();
 			kostka->CzyUlozona();
-		} else if (sign == 'y'){
+		} else if (sign == 'D'){
 			kostka->D();
 			kostka->Wypisz();
 			kostka->CzyUlozona();
-		} else if (sign == 'h'){
+		} else if (sign == 'd'){
 			kostka->d();
 			kostka->Wypisz();
 			kostka->CzyUlozona();
 
-		} else if (sign == 'x') {
+		} else if (sign == 'q') {
 			return 0;
 		}
 	}

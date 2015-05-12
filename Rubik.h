@@ -72,6 +72,7 @@ class Scianka {
 
 		void Set(int x, char sign) {
 			Tab[x] = sign;
+			TabCopy[x] = sign;
 		}
 		char Get(int x) {
 			return Tab[x];
