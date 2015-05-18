@@ -24,8 +24,9 @@ class Scianka {
 
 			for (int i = 0; i < 8; i++) {
 				TabCopy[i] = KolorSrodka;
-				Tab[i] = KolorSrodka;
+				TabCopy[i] = KolorSrodka;
 			}
+			fillArrayToPrint();
 		}
 
 		~Scianka() {
@@ -71,9 +72,31 @@ class Scianka {
 		}
 
 		void Set(int x, char sign) {
+			switch(x) {
+				case 0 : TabCopy[0] = sign;
+				break;
+				case 1 : TabCopy[1] = sign;
+				break;
+				case 2 : TabCopy[2] = sign;
+				break;
+				case 3 : TabCopy[7] = sign;
+				break;
+				case 4 : TabCopy[3] = sign;
+				break;
+				case 5 : TabCopy[6] = sign;
+				break;
+				case 6 : TabCopy[5] = sign;
+				break;
+				case 7 : TabCopy[4] = sign;
+				break;
+			}
 			Tab[x] = sign;
-			TabCopy[x] = sign;
 		}
+
+		void SetSimple(int x, char sign) {
+			TabCopy[x] = Tab[x] = sign;
+		}
+		
 		char Get(int x) {
 			return Tab[x];
 		}

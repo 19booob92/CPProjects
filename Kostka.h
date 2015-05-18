@@ -1,6 +1,7 @@
 #ifndef KOSTKA_H
 #define KOSTKA_H
 
+#include "Loader.h"
 #include "stdio.h"
 #include "Rubik.h"
 #include <cstdlib>
@@ -10,6 +11,7 @@ class Kostka{
 		Scianka *Up,*Left,*Front,*Right,*Back,*Down;
 	public:
 		Kostka();
+		Kostka(char * nazwaPliku);
 		void U();
 		void u();
 		void L();
@@ -26,6 +28,50 @@ class Kostka{
 		bool CzyUlozona();
 		void Ruch(char c);
 };
+
+Kostka::Kostka(char * nazwaPliku) {
+
+	const int FIRST_MIDDLE = 4;
+	const int DIFF = 8;
+
+	char* tab = readFile(nazwaPliku);
+
+	Up = new Scianka(tab[FIRST_MIDDLE]);
+	Left = new Scianka(tab[22]);
+	Front = new Scianka(tab[25]);
+	Right = new Scianka(tab[28]);
+	Back = new Scianka(tab[31]);
+	Down = new Scianka(tab[49]);
+
+	for (int i = 0; i < 4; i++) {
+		Up->Set(i, tab[i]);
+	}
+	for (int i = 4; i < 8;i++) {
+		Up->Set(i, tab[i+1]);
+	}
+
+	int position = 9;
+	for (int i = 0; i < 3; i++) {
+		for (int j = 0; j < 11; j++) {
+			if (j < 3) {
+				Left->Set(j, tab[8 + j*i]);
+			} else if (j < 6) {
+				Front->Set(j, tab[8 + j*i]);	
+			} else if (j < 9){
+				Right->Set(j, tab[8 + j*i]);
+			} else {
+				Back->Set(j, tab[8+j*i]);
+			}
+		}
+	}
+
+	for (int i = 9; i < 45; i++) {
+		
+	}
+	
+
+	Wypisz();
+}
 
 Kostka::Kostka() {
 	Up = new Scianka('W');
@@ -65,42 +111,42 @@ void Kostka::u() {
 
 void Kostka::L() {
 	Left->ObrotC();
-	Obrot(*Up, 0, 3, 5, *Front, 0, 3, 5, *Down, 0, 3, 5, *Back, 2, 4, 7 );	
+	Obrot(*Up, 0, 3, 5, *Front, 0, 3, 5, *Down, 0, 3, 5, *Back, 7, 4, 2 );	
 }
 
 void Kostka::l() {
 	Left->ObrotAC();
-	Obrot(*Back, 2, 4, 7, *Down, 0, 3, 5, *Front, 0, 3, 5, *Up, 0, 3, 5 );	
+	Obrot(*Back, 7, 4, 2, *Down, 0, 3, 5, *Front, 0, 3, 5, *Up, 0, 3, 5 );	
 }
 
 void Kostka::F() {
 	Front->ObrotC();
-	Obrot(*Up, 5, 6, 7, *Left, 2, 4, 7, *Right, 0, 3, 5, *Down, 0, 1, 2 );	
+	Obrot(*Up, 7, 6, 5, *Right, 5, 3, 0, *Down, 0, 1, 2, *Left, 2, 4, 7 );	
 }
 
 void Kostka::f() {
 	Front->ObrotAC();
-	Obrot(*Down, 0,1,2, *Right, 0, 3, 5, *Left, 2, 4, 7, *Up, 5,6,7);	
+	Obrot(*Left, 2,4,7, *Down, 0,1,2, *Right, 5,3,0, *Up, 7,6,5);	
 }
 
 void Kostka::R() {
 	Right->ObrotC();
-	Obrot(*Up, 2,4,7, *Back, 0, 3,5, *Down, 2, 4, 7, *Front,2,4,7);	
+	Obrot(*Up, 2,4,7, *Back, 5, 3,0, *Down, 2, 4, 7, *Front,2,4,7);	
 }
 
 void Kostka::r() {
 	Right->ObrotAC();
-	Obrot(*Front, 2,4,7, *Down, 2,4,7, *Back, 0,3,5, *Up, 2,4,7);	
+	Obrot(*Front, 2,4,7, *Down, 2,4,7, *Back, 5,3,0, *Up, 2,4,7);	
 }
 
 void Kostka::B() {
 	Back->ObrotC();
-	Obrot(*Up, 0,1,2, *Left, 0,3,5, *Down, 5,6,7, *Right, 2,4,7);	
+	Obrot(*Up, 0,1,2, *Left, 5,3,0, *Down, 7,6,5, *Right, 2,4,7);	
 }
 
 void Kostka::b() {
 	Back->ObrotAC();
-	Obrot(*Right, 2,4,7, *Down, 5,6,7, *Left, 0,3,5, *Up, 0,1,2);	
+	Obrot(*Right, 2,4,7, *Down, 7,6,5, *Left, 5,3,0, *Up, 0,1,2);	
 }
 
 void Kostka::D() {

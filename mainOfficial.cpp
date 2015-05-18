@@ -2,9 +2,15 @@
 #include "Kostka.h"
 #include "stdio.h"
 #include <iostream>
+#include <string>
 
 int main() {
-	Kostka* kostka = new Kostka();
+
+	string NAME = "rubikCube.txt";
+
+	char *name = &NAME[0];
+
+	Kostka* kostka = new Kostka(name);
 	while (1) {
 
 		const int MAX_CHAR_AMOUNT = 255;
