@@ -32,17 +32,19 @@ class Kostka{
 Kostka::Kostka(char * nazwaPliku) {
 
 	const int FIRST_MIDDLE = 4;
-	const int DIFF = 8;
+	const int SECOND_MIDDLE = 22;
+	const int DIFF = 3;
 
 	char* tab = readFile(nazwaPliku);
 
 	Up = new Scianka(tab[FIRST_MIDDLE]);
-	Left = new Scianka(tab[22]);
-	Front = new Scianka(tab[25]);
-	Right = new Scianka(tab[28]);
-	Back = new Scianka(tab[31]);
-	Down = new Scianka(tab[49]);
+	Left = new Scianka(tab[SECOND_MIDDLE]);
+	Front = new Scianka(tab[SECOND_MIDDLE + DIFF]);
+	Right = new Scianka(tab[SECOND_MIDDLE + 2*DIFF]);
+	Back = new Scianka(tab[SECOND_MIDDLE + 3*DIFF]);
+	Down = new Scianka(tab[50]);
 
+	//sciana gorna
 	for (int i = 0; i < 4; i++) {
 		Up->Set(i, tab[i]);
 	}
@@ -50,25 +52,50 @@ Kostka::Kostka(char * nazwaPliku) {
 		Up->Set(i, tab[i+1]);
 	}
 
-	int position = 9;
-	for (int i = 0; i < 3; i++) {
-		for (int j = 0; j < 11; j++) {
-			if (j < 3) {
-				Left->Set(j, tab[8 + j*i]);
-			} else if (j < 6) {
-				Front->Set(j, tab[8 + j*i]);	
-			} else if (j < 9){
-				Right->Set(j, tab[8 + j*i]);
-			} else {
-				Back->Set(j, tab[8+j*i]);
-			}
-		}
+	
+	// pierwsz linia scian L F R B
+	for (int i = 0, j = 9; j < 12; j++, i++) {
+		Left->Set(i, tab[j]);
+	}
+	for (int i = 0, j = 12; j < 15; j++, i++) {
+		Front->Set(i, tab[j]);
+	}
+	for (int i = 0, j = 15; j < 18; j++, i++) {
+		Right->Set(i, tab[j]);
+	}
+	for (int i = 0, j = 18; j < 21; j++, i++) {
+		Back->Set(i, tab[j]);
 	}
 
-	for (int i = 9; i < 45; i++) {
-		
+	// druga linia dla ścian L F R B (gdzie pojawiają się wyjątki)
+	Left->Set(3, tab[21] ); Left->Set(4, tab[23]);
+	Front->Set(3, tab[24] ); Front->Set(4, tab[26]);
+	Right->Set(3, tab[27] ); Right->Set(4, tab[29]);
+	Back->Set(3, tab[30] ); Back->Set(4, tab[32]);
+
+	// trzecia linia dla ścian L F R B
+	for (int i = 5, j = 33; j < 36; j++, i++) {
+		Left->Set(i, tab[j]);
 	}
-	
+	for (int i = 5, j = 36; j < 39; j++, i++) {
+		Front->Set(i, tab[j]);
+	}
+	for (int i = 5, j = 39; j < 42; j++, i++) {
+		Right->Set(i, tab[j]);
+	}
+	for (int i = 5, j = 42; j < 45; j++, i++) {
+		Back->Set(i, tab[j]);
+	}
+
+
+	for (int i = 0, j = 45; i < 4; i++, j++) {
+		Down->Set(i, tab[j]);
+	}
+	for (int i = 4, j = 49; i < 8; i++, j++) {
+		Down->Set(i, tab[j+1]);
+	}
+
+
 
 	Wypisz();
 }
