@@ -5,13 +5,18 @@
 #include "stdio.h"
 #include "Rubik.h"
 #include <cstdlib>
+#include <iostream>
+
 using namespace std;
 class Kostka{
 	private:
 		Scianka *Up,*Left,*Front,*Right,*Back,*Down;
+		char moves [12] = {'u', 'U', 'l', 'L', 'f' , 'F' , 'b', 'B', 'd', 'D', 'r', 'R'};
+		int reverseMove(int move);
 	public:
 		Kostka();
 		Kostka(char * nazwaPliku);
+		int Uloz(int n);
 		void U();
 		void u();
 		void L();
@@ -28,6 +33,14 @@ class Kostka{
 		bool CzyUlozona();
 		void Ruch(char c);
 };
+
+int Kostka::reverseMove(int nextMove) {
+	if (isupper((int)moves[nextMove]))      {
+		return nextMove--;
+	} else {
+		return nextMove++;
+	}
+}
 
 Kostka::Kostka(char * nazwaPliku) {
 
@@ -52,7 +65,7 @@ Kostka::Kostka(char * nazwaPliku) {
 		Up->Set(i, tab[i+1]);
 	}
 
-	
+
 	// pierwsz linia scian L F R B
 	for (int i = 0, j = 9; j < 12; j++, i++) {
 		Left->Set(i, tab[j]);
@@ -125,6 +138,7 @@ bool Kostka::CzyUlozona() {
 	printf("Gratulacje, ułożyłeś kostkę");
 	return true;
 }
+
 
 void Kostka::U() {
 	Up->ObrotC();
@@ -266,10 +280,31 @@ void Kostka::Ruch(char x) {
 			  } break;
 		case 'q': {
 			  } 
-			  default : {
-				exit(0);				  
+		case 's' : {
+				   printf("\nWpisz ilosc ruchow \n");
+				   int n = 0;
+				   cin >> n;
+				   Uloz(n);
+			   } break;
+		default : {
+				  exit(0);				  
 			  }
 	}
+}
+
+int Kostka::Uloz(int n) {
+	int move = 0;
+	Ruch(moves[move]);
+
+	if (CzyUlozona()) { 
+		printf("%c", moves[move]);
+	} else if (n == 0) {
+		return 0;
+	} else {
+		Ruch(reverseMove(move));
+		move++;
+	}
+	Uloz(n--);
 }
 
 #endif
