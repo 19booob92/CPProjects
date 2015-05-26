@@ -6,17 +6,18 @@
 #include "Rubik.h"
 #include <cstdlib>
 #include <iostream>
+#include <time.h>
 
 using namespace std;
+static const char moves[] = "uUlLfFbBdDrR";
 class Kostka{
 	private:
 		Scianka *Up,*Left,*Front,*Right,*Back,*Down;
-		char moves [12] = {'u', 'U', 'l', 'L', 'f' , 'F' , 'b', 'B', 'd', 'D', 'r', 'R'};
-		int reverseMove(int move);
+		void reverseMove(int move);
 	public:
 		Kostka();
 		Kostka(char * nazwaPliku);
-		int Uloz(int n);
+		void Uloz(int n);
 		void U();
 		void u();
 		void L();
@@ -32,15 +33,8 @@ class Kostka{
 		void Wypisz();
 		bool CzyUlozona();
 		void Ruch(char c);
+		void Wymieszaj(int n);
 };
-
-int Kostka::reverseMove(int nextMove) {
-	if (isupper((int)moves[nextMove]))      {
-		return nextMove--;
-	} else {
-		return nextMove++;
-	}
-}
 
 Kostka::Kostka(char * nazwaPliku) {
 
@@ -107,9 +101,6 @@ Kostka::Kostka(char * nazwaPliku) {
 	for (int i = 4, j = 49; i < 8; i++, j++) {
 		Down->Set(i, tab[j+1]);
 	}
-
-
-
 	Wypisz();
 }
 
@@ -127,15 +118,11 @@ Kostka::Kostka() {
 bool Kostka::CzyUlozona() {
 	for (int i = 0; i < 8; i++) {
 		if (Up->getMidColor() != Up->Get(i) || Front->getMidColor() != Front->Get(i) || Back->getMidColor() != Back->Get(i)) {
-			printf("Kostka nie została jeszcze ułożona");
 			return false;
-		}
-		if (Left->getMidColor() != Left->Get(i) || Right->getMidColor() != Right->Get(i) || Down->getMidColor() != Down->Get(i)) {
-			printf("Kostka nie została jeszcze ułożona");
+		} else if (Left->getMidColor() != Left->Get(i) || Right->getMidColor() != Right->Get(i) || Down->getMidColor() != Down->Get(i)) {
 			return false;
 		}
 	}
-	printf("Gratulacje, ułożyłeś kostkę");
 	return true;
 }
 
@@ -220,71 +207,53 @@ void Kostka::Ruch(char x) {
 	switch(x) {
 		case 'U' : {
 				   U();
-				   Wypisz();
-				   CzyUlozona();
 			   } break;
 		case 'u' : {
 				   u();
-				   Wypisz();
-				   CzyUlozona();
 			   } break;
 		case 'L' : {
 				   L();
-				   Wypisz();
-				   CzyUlozona();
 			   } break;
 		case 'l' : {
 				   l();
-				   Wypisz();
-				   CzyUlozona();
 			   } break;
 		case 'F' : {
 				   F();
-				   Wypisz();
-				   CzyUlozona();
 			   } break;
 		case 'f' : {
 				   f();
-				   Wypisz();
-				   CzyUlozona();
 			   } break;
 		case 'R' : {
 				   R();
-				   Wypisz();
-				   CzyUlozona();
 			   } break;
 		case 'r' : {
 				   r();
-				   Wypisz();
-				   CzyUlozona();
 			   } break;
 		case 'B' : {
 				   B();
-				   Wypisz();
-				   CzyUlozona();
 			   } break;
 		case 'b': {
 				  b();
-				  Wypisz();
-				  CzyUlozona();
 			  } break;
 		case 'D': {
 				  D();
-				  Wypisz();
-				  CzyUlozona();
 			  } break;
 		case 'd': {
 				  d();
-				  Wypisz();
-				  CzyUlozona();
 			  } break;
 		case 'q': {
-			  } 
+				  exit(0);
+			  } break;
 		case 's' : {
 				   printf("\nWpisz ilosc ruchow \n");
 				   int n = 0;
 				   cin >> n;
+				   Wypisz();
 				   Uloz(n);
+				   if (CzyUlozona()) {
+					printf("\nGratulacje ułożyłeś kostkę ! \n");
+					Wypisz();
+				   }
 			   } break;
 		default : {
 				  exit(0);				  
@@ -292,19 +261,49 @@ void Kostka::Ruch(char x) {
 	}
 }
 
-int Kostka::Uloz(int n) {
-	int move = 0;
-	Ruch(moves[move]);
+void Kostka::Wymieszaj(int n){
 
-	if (CzyUlozona()) { 
-		printf("%c", moves[move]);
-	} else if (n == 0) {
-		return 0;
-	} else {
-		Ruch(reverseMove(move));
-		move++;
+	for(int i=0;i<n;i++){
+
+		int move =rand()%12;
+		Ruch(moves[move]);
 	}
-	Uloz(n--);
+}
+
+int z = 0;
+void Kostka::Uloz(int n){
+
+	if (CzyUlozona()){
+		return;
+	}else{
+		if(n==0) return;
+		else{
+			for(int l=0;l<12;l++){
+				Ruch(moves[l]);
+				Uloz(n-1);
+				if(CzyUlozona()){
+					z++;
+					if(z==1)
+						cout<<"Potrzebne ruchy: ";
+					else {
+						printf("%c", moves[l]);
+					}
+				}
+				else{
+					reverseMove(l);
+				}
+			}
+		}
+	}
+}
+
+void Kostka::reverseMove(int nextMove) {
+	if (nextMove %2 == 0) {
+		Ruch(moves[++nextMove]);
+	} else {
+		Ruch(moves[--nextMove]);
+	}
 }
 
 #endif
+
