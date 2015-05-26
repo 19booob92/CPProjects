@@ -1,7 +1,11 @@
 #ifndef SCIANA_H
 #define SCIANA_H
 
+#include <string>
 #include "stdio.h"
+#include <sstream>
+
+using namespace std;
 
 class Scianka {
 	private:
@@ -16,7 +20,7 @@ class Scianka {
 		void ObrotC();
 		void ObrotAC();
 
-		friend void Obrot(Scianka &A,int a1,int a2,int a3,Scianka &B,int b1,int b2,int b3,Scianka &C,int c1,int c2,int c3,Scianka &D,int d1,int d2,int d3);
+		friend void Obrot(Scianka &A,int a1,int a2,int a3,Scianka &B,int b1,int b2,int b3,Scianka &C,int c1,int c2,int c3,Scianka &D,int d1,int d2,int d3) throw (string);
 
 		Scianka(char kolor) : KolorSrodka(kolor) {
 			TabCopy = new char[8];
@@ -93,16 +97,23 @@ class Scianka {
 			Tab[x] = sign;
 		}
 
-		void SetSimple(int x, char sign) {
+		void SetSimple(int x, char sign) throw (int){
+			if (x > sizeof(Tab)/sizeof(Tab[0]) || x < 0 || x > sizeof(TabCopy)/sizeof(TabCopy[0])) {
+				throw x;
+			}
 			TabCopy[x] = Tab[x] = sign;
 		}
 		
-		char Get(int x) {
+		char Get(int x) throw (int){
+			if (x > sizeof(Tab)/sizeof(Tab[0]) || x < 0) {
+				throw x;
+			}
 			return Tab[x];
 		}
 };
 
-void Obrot(Scianka &A,int a1,int a2,int a3,Scianka &B,int b1,int b2,int b3,Scianka &C,int c1,int c2,int c3,Scianka &D,int d1,int d2,int d3) {
+void Obrot(Scianka &A,int a1,int a2,int a3,Scianka &B,int b1,int b2,int b3,Scianka &C,int c1,int c2,int c3,Scianka &D,int d1,int d2,int d3) throw(string){
+	try {
 	char tmpCol1 = B.Get(b1);
 
 	B.Set(b1, A.Get(a1));
@@ -139,6 +150,11 @@ void Obrot(Scianka &A,int a1,int a2,int a3,Scianka &B,int b1,int b2,int b3,Scian
 	tmpCol1 = D.Get(d3);
 	D.Set(d3, tmpCol2);
 	A.Set(a3, tmpCol1);
+	} catch (int wrongInd) {
+		ostringstream result;
+		result << "Podano zly index dla getter' a lub setter' a, zły index to : " << wrongInd;
+		throw result.str();
+	}
 }
 
 

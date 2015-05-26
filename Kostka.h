@@ -7,16 +7,20 @@
 #include <cstdlib>
 #include <iostream>
 #include <time.h>
+#include <string>
 
 using namespace std;
 static const char moves[] = "uUlLfFbBdDrR";
+static const char centerColours[] = "WYRBOG";
+
 class Kostka{
 	private:
 		Scianka *Up,*Left,*Front,*Right,*Back,*Down;
 		void reverseMove(int move);
+		char checkIsMiddleProper(char midCol) throw (string);
 	public:
 		Kostka();
-		Kostka(char * nazwaPliku);
+		Kostka(char * nazwaPliku) throw (string);
 		void Uloz(int n);
 		void U();
 		void u();
@@ -36,7 +40,21 @@ class Kostka{
 		void Wymieszaj(int n);
 };
 
-Kostka::Kostka(char * nazwaPliku) {
+char Kostka::checkIsMiddleProper(char midCol) throw (string){
+	int occurs = 0;
+	for (int i = 0; i < 6; i++) {
+		if (midCol == centerColours[i]) {
+			occurs++;	
+		}
+	}
+	if (occurs > 1 || occurs == 0) {
+		throw (string)"Nie poprawny kolor środka !!!\n";
+	} else {
+		return midCol;
+	}
+}
+
+Kostka::Kostka(char * nazwaPliku) throw (string) {
 
 	const int FIRST_MIDDLE = 4;
 	const int SECOND_MIDDLE = 22;
@@ -44,12 +62,12 @@ Kostka::Kostka(char * nazwaPliku) {
 
 	char* tab = readFile(nazwaPliku);
 
-	Up = new Scianka(tab[FIRST_MIDDLE]);
-	Left = new Scianka(tab[SECOND_MIDDLE]);
-	Front = new Scianka(tab[SECOND_MIDDLE + DIFF]);
-	Right = new Scianka(tab[SECOND_MIDDLE + 2*DIFF]);
-	Back = new Scianka(tab[SECOND_MIDDLE + 3*DIFF]);
-	Down = new Scianka(tab[50]);
+	Up = new Scianka(checkIsMiddleProper(tab[FIRST_MIDDLE]));
+	Left = new Scianka(checkIsMiddleProper(tab[SECOND_MIDDLE]));
+	Front = new Scianka(checkIsMiddleProper(tab[SECOND_MIDDLE + DIFF]));
+	Right = new Scianka(checkIsMiddleProper(tab[SECOND_MIDDLE + 2*DIFF]));
+	Back = new Scianka(checkIsMiddleProper(tab[SECOND_MIDDLE + 3*DIFF]));
+	Down = new Scianka(checkIsMiddleProper(tab[50]));
 
 	//sciana gorna
 	for (int i = 0; i < 4; i++) {
@@ -128,63 +146,113 @@ bool Kostka::CzyUlozona() {
 
 
 void Kostka::U() {
-	Up->ObrotC();
-	Obrot(*Left, 0, 1, 2, *Front, 0, 1, 2, *Right, 0, 1, 2, *Back, 0, 1, 2 );	
+	try {
+		Up->ObrotC();
+		Obrot(*Left, 0, 1, 2, *Front, 0, 1, 2, *Right, 0, 1, 2, *Back, 0, 1, 2 );	
+	} catch (string error) {
+		cout << error;
+	}
+
 }
 
 void Kostka::u() {
-	Up->ObrotAC();
-	Obrot(*Back, 0, 1, 2, *Right, 0, 1, 2, *Front, 0, 1, 2, *Left, 0, 1, 2 );	
+	try {
+		Up->ObrotAC();
+		Obrot(*Back, 0, 1, 2, *Right, 0, 1, 2, *Front, 0, 1, 2, *Left, 0, 1, 2 );	
+	} catch (string error) {
+		cout<<error;
+	}
 }
 
 void Kostka::L() {
-	Left->ObrotC();
-	Obrot(*Up, 0, 3, 5, *Front, 0, 3, 5, *Down, 0, 3, 5, *Back, 7, 4, 2 );	
+	try {
+		Left->ObrotC();
+		Obrot(*Up, 0, 3, 5, *Front, 0, 3, 5, *Down, 0, 3, 5, *Back, 7, 4, 2 );	
+	} catch (string error) {
+		cout << error;
+	}
 }
 
 void Kostka::l() {
-	Left->ObrotAC();
-	Obrot(*Back, 7, 4, 2, *Down, 0, 3, 5, *Front, 0, 3, 5, *Up, 0, 3, 5 );	
+	try {
+		Left->ObrotAC();
+		Obrot(*Back, 7, 4, 2, *Down, 0, 3, 5, *Front, 0, 3, 5, *Up, 0, 3, 5 );	
+	} catch (string error) {
+		cout << error;
+	}
 }
 
 void Kostka::F() {
-	Front->ObrotC();
-	Obrot(*Up, 7, 6, 5, *Right, 5, 3, 0, *Down, 0, 1, 2, *Left, 2, 4, 7 );	
+	try {
+		Front->ObrotC();
+		Obrot(*Up, 7, 6, 5, *Right, 5, 3, 0, *Down, 0, 1, 2, *Left, 2, 4, 7 );	
+	} catch (string error) {
+		cout << error;
+	}
 }
 
 void Kostka::f() {
-	Front->ObrotAC();
-	Obrot(*Left, 2,4,7, *Down, 0,1,2, *Right, 5,3,0, *Up, 7,6,5);	
+	try {
+		Front->ObrotAC();
+		Obrot(*Left, 2,4,7, *Down, 0,1,2, *Right, 5,3,0, *Up, 7,6,5);	
+	} catch (string error) {
+		cout << error;
+	}
 }
 
 void Kostka::R() {
-	Right->ObrotC();
-	Obrot(*Up, 2,4,7, *Back, 5, 3,0, *Down, 2, 4, 7, *Front,2,4,7);	
+	try {
+		Right->ObrotC();
+		Obrot(*Up, 2,4,7, *Back, 5, 3,0, *Down, 2, 4, 7, *Front,2,4,7);	
+	} catch (string error) {
+		cout << error;
+	}
 }
 
+
 void Kostka::r() {
-	Right->ObrotAC();
-	Obrot(*Front, 2,4,7, *Down, 2,4,7, *Back, 5,3,0, *Up, 2,4,7);	
+	try {
+		Right->ObrotAC();
+		Obrot(*Front, 2,4,7, *Down, 2,4,7, *Back, 5,3,0, *Up, 2,4,7);	
+	} catch (string error) {
+		cout << error;
+	}
 }
 
 void Kostka::B() {
-	Back->ObrotC();
-	Obrot(*Up, 0,1,2, *Left, 5,3,0, *Down, 7,6,5, *Right, 2,4,7);	
+	try {
+		Back->ObrotC();
+		Obrot(*Up, 0,1,2, *Left, 5,3,0, *Down, 7,6,5, *Right, 2,4,7);	
+	} catch (string error) {
+		cout << error;
+	}
 }
 
 void Kostka::b() {
-	Back->ObrotAC();
-	Obrot(*Right, 2,4,7, *Down, 7,6,5, *Left, 5,3,0, *Up, 0,1,2);	
+	try {
+		Back->ObrotAC();
+		Obrot(*Right, 2,4,7, *Down, 7,6,5, *Left, 5,3,0, *Up, 0,1,2);	
+	} catch (string error) {
+		cout << error;
+	}
 }
 
 void Kostka::D() {
-	Down->ObrotC();
-	Obrot(*Left, 5,6,7, *Front, 5,6,7, *Right, 5, 6, 7, *Back, 5,6,7);	
+	try {
+		Down->ObrotC();
+		Obrot(*Left, 5,6,7, *Front, 5,6,7, *Right, 5, 6, 7, *Back, 5,6,7);	
+	} catch (string error) {
+		cout << error;
+	}
 }
 
 void Kostka::d() {
-	Down->ObrotAC();
-	Obrot(*Back, 5,6,7, *Right, 5,6,7, *Front, 5,6,7, *Left, 5,6,7);	
+	try {
+		Down->ObrotAC();
+		Obrot(*Back, 5,6,7, *Right, 5,6,7, *Front, 5,6,7, *Left, 5,6,7);
+	} catch (string error) {
+		cout << error;
+	}
 }
 
 void Kostka::Wypisz() {
@@ -241,6 +309,14 @@ void Kostka::Ruch(char x) {
 		case 'd': {
 				  d();
 			  } break;
+		case 'w': {
+				  printf("\nWpisz ilosc ruchow \n");
+				  int n = 0;
+				  cin >> n;
+				  Wypisz();
+				  Wymieszaj(n);
+				  Wypisz();
+			  } break;
 		case 'q': {
 				  exit(0);
 			  } break;
@@ -250,9 +326,8 @@ void Kostka::Ruch(char x) {
 				   cin >> n;
 				   Wypisz();
 				   Uloz(n);
-				   if (CzyUlozona()) {
-					printf("\nGratulacje ułożyłeś kostkę ! \n");
-					Wypisz();
+				   if (!CzyUlozona()) {
+					   printf("Nie udało się ułożyć kostki w %d ruchach", n);
 				   }
 			   } break;
 		default : {
@@ -275,19 +350,22 @@ void Kostka::Uloz(int n){
 
 	if (CzyUlozona()){
 		return;
-	}else{
-		if(n==0) return;
-		else{
+	} else{
+		if(n==0) {
+			return;
+		} else{
 			for(int l=0;l<12;l++){
 				Ruch(moves[l]);
 				Uloz(n-1);
 				if(CzyUlozona()){
 					z++;
-					if(z==1)
+					if(z==1) {
 						cout<<"Potrzebne ruchy: ";
-					else {
+						printf("%c", moves[l]);
+					} else {
 						printf("%c", moves[l]);
 					}
+					return;
 				}
 				else{
 					reverseMove(l);
