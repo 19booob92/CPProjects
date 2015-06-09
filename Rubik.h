@@ -64,7 +64,7 @@ class Scianka {
 					  break;
 			}
 		}
-		
+
 		char getMidColor() {
 			return KolorSrodka;
 		}			
@@ -78,34 +78,34 @@ class Scianka {
 		void Set(int x, char sign) {
 			switch(x) {
 				case 0 : TabCopy[0] = sign;
-				break;
+					 break;
 				case 1 : TabCopy[1] = sign;
-				break;
+					 break;
 				case 2 : TabCopy[2] = sign;
-				break;
+					 break;
 				case 3 : TabCopy[7] = sign;
-				break;
+					 break;
 				case 4 : TabCopy[3] = sign;
-				break;
+					 break;
 				case 5 : TabCopy[6] = sign;
-				break;
+					 break;
 				case 6 : TabCopy[5] = sign;
-				break;
+					 break;
 				case 7 : TabCopy[4] = sign;
-				break;
+					 break;
 			}
 			Tab[x] = sign;
 		}
 
 		void SetSimple(int x, char sign) throw (int){
-			if (x > sizeof(Tab)/sizeof(Tab[0]) || x < 0 || x > sizeof(TabCopy)/sizeof(TabCopy[0])) {
+			if (x > 7 || x < 0 || x > 7) {
 				throw x;
 			}
 			TabCopy[x] = Tab[x] = sign;
 		}
-		
+
 		char Get(int x) throw (int){
-			if (x > sizeof(Tab)/sizeof(Tab[0]) || x < 0) {
+			if (x > 7 || x < 0) {
 				throw x;
 			}
 			return Tab[x];
@@ -114,49 +114,48 @@ class Scianka {
 
 void Obrot(Scianka &A,int a1,int a2,int a3,Scianka &B,int b1,int b2,int b3,Scianka &C,int c1,int c2,int c3,Scianka &D,int d1,int d2,int d3) throw(string){
 	try {
-	char tmpCol1 = B.Get(b1);
+		char tmpCol1 = B.Get(b1);
 
-	B.Set(b1, A.Get(a1));
+		B.Set(b1, A.Get(a1));
 
-	char tmpCol2 = C.Get(c1);
+		char tmpCol2 = C.Get(c1);
 
-	C.Set(c1, tmpCol1);
-	tmpCol1 = D.Get(d1);
-	D.Set(d1, tmpCol2);
-	A.Set(a1, tmpCol1);
-
-
-
-	tmpCol1 = B.Get(b2);
-
-	B.Set(b2, A.Get(a2));
-
-	tmpCol2 = C.Get(c2);
-
-	C.Set(c2, tmpCol1);
-	tmpCol1 = D.Get(d2);
-	D.Set(d2, tmpCol2);
-	A.Set(a2, tmpCol1);
+		C.Set(c1, tmpCol1);
+		tmpCol1 = D.Get(d1);
+		D.Set(d1, tmpCol2);
+		A.Set(a1, tmpCol1);
 
 
 
-	tmpCol1 = B.Get(b3);
+		tmpCol1 = B.Get(b2);
 
-	B.Set(b3, A.Get(a3));
+		B.Set(b2, A.Get(a2));
 
-	tmpCol2 = C.Get(c3);
+		tmpCol2 = C.Get(c2);
 
-	C.Set(c3, tmpCol1);
-	tmpCol1 = D.Get(d3);
-	D.Set(d3, tmpCol2);
-	A.Set(a3, tmpCol1);
+		C.Set(c2, tmpCol1);
+		tmpCol1 = D.Get(d2);
+		D.Set(d2, tmpCol2);
+		A.Set(a2, tmpCol1);
+
+
+
+		tmpCol1 = B.Get(b3);
+
+		B.Set(b3, A.Get(a3));
+
+		tmpCol2 = C.Get(c3);
+
+		C.Set(c3, tmpCol1);
+		tmpCol1 = D.Get(d3);
+		D.Set(d3, tmpCol2);
+		A.Set(a3, tmpCol1);
 	} catch (int wrongInd) {
 		ostringstream result;
-		result << "Podano zly index dla getter' a lub setter' a, zły index to : " << wrongInd;
+		result << "Podano zly index dla getter' a lub setter' a, zły index to : " << wrongInd << endl;
 		throw result.str();
 	}
 }
-
 
 void Scianka::ObrotAC() {
 	for (int i = 0; i < 2; i++) {
@@ -173,7 +172,6 @@ void Scianka::ObrotC() {
 		fillArrayToPrint();
 	}
 }
-
 
 void Scianka::fillArrayToPrint() {
 

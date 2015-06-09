@@ -11,7 +11,7 @@
 
 using namespace std;
 static const char moves[] = "uUlLfFbBdDrR";
-static const char centerColours[] = "WYRBOG";
+static  char centerColours[] = "WYRBOG";
 
 class Kostka{
 	private:
@@ -44,10 +44,11 @@ char Kostka::checkIsMiddleProper(char midCol) throw (string){
 	int occurs = 0;
 	for (int i = 0; i < 6; i++) {
 		if (midCol == centerColours[i]) {
-			occurs++;	
+			occurs++;
+			centerColours[i] = (char) 0;
 		}
 	}
-	if (occurs > 1 || occurs == 0) {
+	if (occurs == 0) {
 		throw (string)"Nie poprawny kolor środka !!!\n";
 	} else {
 		return midCol;
@@ -150,7 +151,8 @@ void Kostka::U() {
 		Up->ObrotC();
 		Obrot(*Left, 0, 1, 2, *Front, 0, 1, 2, *Right, 0, 1, 2, *Back, 0, 1, 2 );	
 	} catch (string error) {
-		cout << error;
+		cout << error;	
+		exit(0);
 	}
 
 }
@@ -161,6 +163,7 @@ void Kostka::u() {
 		Obrot(*Back, 0, 1, 2, *Right, 0, 1, 2, *Front, 0, 1, 2, *Left, 0, 1, 2 );	
 	} catch (string error) {
 		cout<<error;
+		exit(0);
 	}
 }
 
@@ -170,6 +173,7 @@ void Kostka::L() {
 		Obrot(*Up, 0, 3, 5, *Front, 0, 3, 5, *Down, 0, 3, 5, *Back, 7, 4, 2 );	
 	} catch (string error) {
 		cout << error;
+		exit(0);
 	}
 }
 
@@ -179,6 +183,7 @@ void Kostka::l() {
 		Obrot(*Back, 7, 4, 2, *Down, 0, 3, 5, *Front, 0, 3, 5, *Up, 0, 3, 5 );	
 	} catch (string error) {
 		cout << error;
+		exit(0);
 	}
 }
 
@@ -188,6 +193,7 @@ void Kostka::F() {
 		Obrot(*Up, 7, 6, 5, *Right, 5, 3, 0, *Down, 0, 1, 2, *Left, 2, 4, 7 );	
 	} catch (string error) {
 		cout << error;
+		exit(0);
 	}
 }
 
@@ -197,6 +203,7 @@ void Kostka::f() {
 		Obrot(*Left, 2,4,7, *Down, 0,1,2, *Right, 5,3,0, *Up, 7,6,5);	
 	} catch (string error) {
 		cout << error;
+		exit(0);
 	}
 }
 
@@ -206,6 +213,7 @@ void Kostka::R() {
 		Obrot(*Up, 2,4,7, *Back, 5, 3,0, *Down, 2, 4, 7, *Front,2,4,7);	
 	} catch (string error) {
 		cout << error;
+		exit(0);
 	}
 }
 
@@ -216,6 +224,7 @@ void Kostka::r() {
 		Obrot(*Front, 2,4,7, *Down, 2,4,7, *Back, 5,3,0, *Up, 2,4,7);	
 	} catch (string error) {
 		cout << error;
+		exit(0);
 	}
 }
 
@@ -225,6 +234,7 @@ void Kostka::B() {
 		Obrot(*Up, 0,1,2, *Left, 5,3,0, *Down, 7,6,5, *Right, 2,4,7);	
 	} catch (string error) {
 		cout << error;
+		exit(0);
 	}
 }
 
@@ -234,6 +244,7 @@ void Kostka::b() {
 		Obrot(*Right, 2,4,7, *Down, 7,6,5, *Left, 5,3,0, *Up, 0,1,2);	
 	} catch (string error) {
 		cout << error;
+		exit(0);
 	}
 }
 
@@ -243,6 +254,7 @@ void Kostka::D() {
 		Obrot(*Left, 5,6,7, *Front, 5,6,7, *Right, 5, 6, 7, *Back, 5,6,7);	
 	} catch (string error) {
 		cout << error;
+		exit(0);
 	}
 }
 
@@ -252,6 +264,7 @@ void Kostka::d() {
 		Obrot(*Back, 5,6,7, *Right, 5,6,7, *Front, 5,6,7, *Left, 5,6,7);
 	} catch (string error) {
 		cout << error;
+		exit(0);
 	}
 }
 
